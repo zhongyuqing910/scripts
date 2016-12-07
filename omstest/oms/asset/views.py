@@ -11,7 +11,7 @@ from asset.models import *
 from oms.mysql import db_operate
 from oms.models import *
 from oms import settings
-import requests
+#import requests
 
 
 # Create your views here.
@@ -66,3 +66,21 @@ def host_list_manage(request, id=None):
              "page_name":page_name,
              "action":action,
              },context_instance=RequestContext(request))
+
+
+def host_list(request):
+    user = request.user
+    all_host=HostList.objects.all()
+    paginator=Paginator(all_host,10)
+
+    try:
+        page = int(request.GET.get('page','1'))
+    except ValueError:
+        page = 1
+
+    try:
+        all_host = paginator.page(page)
+    except:
+        all_host = paginator.page(paginator.num_pages)
+
+    return render_to_response('host_list.html',('all_host_list':all_host,'page':page,'paginator':paginator))
