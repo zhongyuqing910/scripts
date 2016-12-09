@@ -25,6 +25,10 @@ SECRET_KEY = 'pffd2wf#v$$)tkg=3s(6^-d$o$12#u6g(=x@q419%ekhwg0e0&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+TEMPLATE_DIRS = (
+    BASE_DIR + '/templates',
+)
+
 ALLOWED_HOSTS = []
 
 
@@ -37,6 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'oms',
+    'asset',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -73,11 +79,22 @@ WSGI_APPLICATION = 'oms.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+'''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'oms',
+        'USER': 'root',
+        'PORT': 3306,
+        'PASSWORD': 'SA123456',
     }
 }
 
@@ -100,6 +117,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    BASE_DIR + '/static'
+)
 
 
 try:

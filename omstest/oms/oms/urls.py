@@ -4,6 +4,8 @@ admin.autodiscover()
 
 #import views
 from asset.views import *
+from oms.views import *
+
 
 
 
@@ -15,6 +17,7 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^asset/host_list/$', host_list, name='host_list'),
-    url(r'^asset/add_host/$', host_list_manage, name='add_host')
+    url(r'^asset/add_host/$', host_list_manage, name='add_host'),
+    url(r'^$', index, name='index'),
 
 )
