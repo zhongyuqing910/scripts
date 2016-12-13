@@ -26,7 +26,7 @@ def host_list_manage(request, id=None):
         action = 'edit'
         page_name = '编辑主机'
         db = db_operate
-        sql = 'select ip from oms_hostlist where id = %s'%(id)
+        sql = 'select ip from asset_hostlist where id = %s'%(id)
         ret = db.mysql_command(settings.OMS_MYSQL, sql)
     else:
         host_list = HostList()
@@ -39,7 +39,7 @@ def host_list_manage(request, id=None):
         delete = request.GET.get('delete')
         id = request.GET.get('id')
         if delete:
-            Message.object.create(type='host', action='manage', action_ip=ret, content='主机下架')
+            #Message.object.create(type='host', action='manage', action_ip=ret, content='主机下架')
             host_list = get_object_or_404(HostList, pk=id)
             host_list.delete()
             return HttpResponseRedirect(reverse('hostlist'))
