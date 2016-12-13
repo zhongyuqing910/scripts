@@ -1,4 +1,5 @@
-from django.conf.urls import include, url
+# -*- coding: utf-8 -*-
+from django.conf.urls import include, url,patterns
 from django.contrib import admin
 admin.autodiscover()
 
@@ -10,7 +11,8 @@ from oms.views import *
 
 
 
-urlpatterns = patterns(
+urlpatterns = patterns('',
+
     # Examples:
     # url(r'^$', 'oms.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
@@ -19,5 +21,8 @@ urlpatterns = patterns(
     url(r'^asset/host_list/$', host_list, name='host_list'),
     url(r'^asset/add_host/$', host_list_manage, name='add_host'),
     url(r'^$', index, name='index'),
+    #url(r'^login/$', acc_login,name='acc_login')
+    url(r'^accounts/',include('users.urls'))
+
 
 )

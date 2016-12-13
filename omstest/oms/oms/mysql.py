@@ -11,7 +11,7 @@ class db_operate:
             conn = MySQLdb.Connect(host=conn["host"],user=conn["user"],passwd = conn["password"],port=conn["database"],charset="utf8")
             cursor = conn.cursor()
             n = cursor.execute(sql_cmd)
-            for row in cursor.fetchall()
+            for row in cursor.fetchall():
                 for i in row:
                     ret.append(i)
         except MySQLdb.Error,e:

@@ -30,6 +30,8 @@ def host_list_manage(request, id=None):
         ret = db.mysql_command(settings.OMS_MYSQL, sql)
     else:
         host_list = HostList()
+        print "11"
+        print HostList()
         action = 'add'
         page_name = '新增主机'
 

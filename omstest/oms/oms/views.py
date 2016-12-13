@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django import utils
+#import utils
 from django.shortcuts import render, HttpResponse,HttpResponseRedirect
 
 
@@ -17,7 +17,22 @@ def acc_login(request):
         password = request.POST.get('password')
         user = auth.authenticate(username=username,password=password)
         if user is not None:
+            if django.utils.timezone.now() > user.valid_begin_time and django.util.timezone.now() < user.valid_end_time:
+                auth.login(request.user)
+                request.session.set_expiry(60*30)
+                return HttpResponseRedirect('/')
+            else:
+                return render(request,'login.html', {'login_err': "User account is expired, please contact your IT guy for this!"})
 
-            if utils.timezone.now() > user.valid_begin_time and utils.timezone.now() < user.valid_end_tim:
-            '''
+        else:
+            return render(request,'login.html',{'login_err': "Wrong username or password!"})
+    else:
+        return render(request,'login.html')
+
+'''
+
+
+
+
+
 

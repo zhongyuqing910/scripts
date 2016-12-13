@@ -6,7 +6,7 @@ from asset.models import *
 class HostListForm(forms.ModelForm):
     class Meta:
         model = HostList
-        field = '__all__'
+        fields = '__all__'
         widgets = {
             'ip': forms.TextInput(attrs={'class': 'from-control'}),
             'hostname': forms.TextInput(attrs={'class': 'form-control'}),

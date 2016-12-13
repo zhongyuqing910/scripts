@@ -24,10 +24,14 @@ SECRET_KEY = 'pffd2wf#v$$)tkg=3s(6^-d$o$12#u6g(=x@q419%ekhwg0e0&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = (
-    BASE_DIR + '/templates',
+    os.path.join(BASE_DIR, 'templates'),
 )
+
+
+
 
 ALLOWED_HOSTS = []
 
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'oms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,7 +98,7 @@ DATABASES = {
         'NAME': 'oms',
         'USER': 'root',
         'PORT': 3306,
-        'PASSWORD': 'SA123456',
+        'PASSWORD': 'new_password',
     }
 }
 
@@ -119,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    BASE_DIR + '/static'
+    BASE_DIR + '/static',
 )
 
 
@@ -127,3 +131,5 @@ try:
     from settings_local import *
 except ImportError:
     pass
+
+#AUTH_USER_MODEL = 'users.User'
