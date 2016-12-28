@@ -35,6 +35,12 @@ def colloct():
     data.update(osinfo())
     data.update(raminfo())
     data.update(nicinfo())
+    data.update(diskinfo())
+
+
+def diskinfo():
+    obj = DiskPlugin()
+    return obj.linex
 
 def nicinfo():
 
@@ -97,10 +103,6 @@ def nicinfo():
     return {'nic':nic_list}
 
 
-
-
-
-
 def raminfo():
     raw_data = commands.getoutput("sodo dmidocode -t 17")
     raw_list = raw_data.split("\n")
@@ -153,18 +155,6 @@ def raminfo():
     return ram_data
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def osinfo():
     distributor = commands.getoutput("lsb_release -a | grep 'Distributor ID'").split(":")
 
@@ -212,4 +202,67 @@ def cpuinfo():
         data["cpu_model"] = -1
 
     return data
+
+
+class DiskPlugin(object):
+
+    def linux(self):
+        result = {"physical_disk_driver":[]}
+
+        try:
+            scripth_path = os.path.dirname(os.path.abspath(__file__))
+            shell_command = "sudo %s/MegaCli  -PDList -aALL" % scripth_path
+            output = commands.getstatusoutput(shell_command)
+            result['physical_disk_driver'] = self.parse(output[1])
+        except Exception as e:
+            result['error'] = e
+        return result
+
+    def parse(self,content):
+
+        response = []
+        result = []
+        for row_line in content.split("\n\n\n\n"):
+            result.append(row_line)
+
+        for item in result:
+            temp_dict = {}
+            for row in item.split('\n'):
+                if not row.strip():
+                    continue
+                if len(row.split(':')) != 2:
+                    continue
+                key, value = row.split(':')
+                name = self.mega_patter_match(key)
+                if name:
+                    if key == 'Raw Size':
+                        raw_size = re.search('(\d+\. \d+)', value.strip())
+                        if raw_size:
+                            temp_dict[name] = raw_size.group()
+                        else:
+                            raw_size = '0'
+                    else:
+                        temp_dict[name] = value.strip()
+            if temp_dict:
+                response.append(temp_dict)
+        return response
+
+
+
+
+
+    def mega_patter_match(self, needle):
+        grep_pattern = {'Slot':'slot', 'Raw Size':'capacity', 'Inquity':'model', 'PD Type':'iface_type'}
+        for key, value in grep_pattern.items():
+            if needle.startswith(key):
+                return value
+        return False
+
+
+if __name__ == "__main__":
+    print DiskPlugin().linux()
+
+
+
+
 

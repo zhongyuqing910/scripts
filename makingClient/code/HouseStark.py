@@ -31,4 +31,18 @@ class ArgvHandler(object):
 
 
     def collect_data(self):
-        obj = info_collection.I
+        obj = info_collection.InfoCollecttion()
+        asset_data = obj.collect()
+
+    def run_forever(self):
+        pass
+
+    def __attach_token(self, url_str):
+
+        user = settings.Params['auth']['user']
+        token_id = settings.Params['auth']['token']
+
+        md5_token, timestamp = api_token.get_token(user, token_id)
+        url_arg_str = "user=%s&timestamp=%s&token=%s" %(user, timestamp, md5_token)
+
+
