@@ -10,7 +10,7 @@ Params = {
     'url':{
         "asset_report_with_no_id":"/asset/repost/asset_with_no_asset_id",
         "asset_report": "/asset/report/",
-    }
+    },
     "asset_id": "%s/var/.asset_id" %BaseDir,
     "log_file": '%s/logs/run_log' %BaseDir,
 
